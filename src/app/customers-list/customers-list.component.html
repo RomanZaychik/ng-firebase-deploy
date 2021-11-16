@@ -1,0 +1,68 @@
+<h2 class="py-3">Список покупателей</h2>
+
+<table class="table table-striped">
+  <ng-container *ngTemplateOutlet="tableHeadBlock"></ng-container>
+
+  <tbody>
+    <tr *ngFor="let customer of httpService.customers; let i = index">
+      <th class="align-middle" scope="row">{{i + 1}}</th>
+
+      <ng-container *ngTemplateOutlet="isEditPos === i ? thenBlock : elseBlock; context: {$implicit: customer}">
+      </ng-container>
+      <ng-container *ngTemplateOutlet="customerControlsBlock; context: {customer: customer, index: i}"></ng-container>
+
+    </tr>
+  </tbody>
+</table>
+
+<ng-template #tableHeadBlock>
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Имя</th>
+      <th scope="col">Email</th>
+      <th scope="col">Телефон</th>
+      <th scope="col">Город</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+</ng-template>
+
+<ng-template #thenBlock let-customer>
+  <td class="align-middle">
+    <input #name type="text" class="form-control form-control-sm" value="{{customer.name}}" (blur)="setValue('name', name.value, customer.name)">
+  </td>
+  <td class="align-middle">
+    <input #email type="email" class="form-control form-control-sm" value="{{customer.email}}" (blur)="setValue('email', email.value, customer.email)">
+  </td>
+  <td class="align-middle">
+    <input #mobile type="tel" class="form-control form-control-sm" value="{{customer.mobile}}" (blur)="setValue('mobile', mobile.value, customer.mobile)">
+  </td>
+  <td class="align-middle">
+    <input #location type="text" class="form-control form-control-sm" value="{{customer.location}}" (blur)="setValue('location', location.value, customer.location)">
+  </td>
+</ng-template>
+
+<ng-template #elseBlock let-customer>
+  <td class="align-middle">{{customer.name}}</td>
+  <td class="align-middle">{{customer.email}}</td>
+  <td class="align-middle">{{customer.mobile}}</td>
+  <td class="align-middle">{{customer.location}}</td>
+</ng-template>
+
+<ng-template #customerControlsBlock let-customer="customer" let-i="index">
+  <td class="align-middle controls">
+    <button type="button" class="btn btn-outline-info ms-2 btn-sm" (click)="editCustomer(i)">
+      <i class="fas fa-edit"></i>
+    </button>
+    <button type="button" class="btn btn-outline-info ms-2 btn-sm" (click)="cancelEdit()">
+      <i class="fas fa-undo"></i>
+    </button>
+    <button type="button" class="btn btn-outline-info ms-2 btn-sm" (click)="saveCustomer(customer, i)">
+      <i class="fas fa-save"></i>
+    </button>
+    <button type="button" class="btn btn-outline-info ms-2 btn-sm" (click)="deleteCustomer(customer)">
+      <i class="fas fa-trash"></i>
+    </button>
+  </td>
+</ng-template>

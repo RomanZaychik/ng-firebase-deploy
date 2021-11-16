@@ -1,0 +1,27 @@
+<h2 class="py-3">Добавить покупателя</h2>
+
+<form (ngSubmit)="onSubmit()" [formGroup]="form">
+  <div class="mb-3">
+    <label for="name" class="form-label">Имя Фамилия</label>
+    <input id="name" type="text" formControlName="name" class="form-control" placeholder="Имя Фамилия">
+  </div>
+
+  <div class="mb-3">
+    <label for="email" class="form-label">Email</label>
+    <input id="email" type="email" formControlName="email" class="form-control" placeholder="Email">
+  </div>
+
+  <div class="mb-3">
+    <label for="mobile" class="form-label">Телефон</label>
+    <input id="mobile" type="tel" formControlName="mobile" class="form-control" placeholder="Телефон">
+  </div>
+
+  <div class="mb-3">
+    <label for="location" class="form-label">Город</label>
+    <input id="location" type="text" formControlName="location" class="form-control" placeholder="Город">
+  </div>
+
+  <div class="mb-3">
+    <button [disabled]="form.invalid" class="btn btn-info">Сохранить</button>
+  </div>
+</form>
